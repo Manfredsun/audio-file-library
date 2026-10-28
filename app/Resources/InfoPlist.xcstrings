@@ -1,0 +1,23 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSHumanReadableCopyright": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Local sound library manager. Offline. No file uploads."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本機音效庫管理工具。不連網，不上傳任何檔案。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

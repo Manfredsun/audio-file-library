@@ -1,0 +1,105 @@
+.DS_Store
+*.swp
+
+# XcodeGen 產生，不入版控
+/FoleyLibrary.xcodeproj/
+app/Info.plist
+
+# Xcode
+xcuserdata/
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+.swiftpm/
+
+# 本機檢查輸出
+docs/env-check.txt
+docs/build-output.txt
+docs/build-full.log
+
+# Claude 的建置觸發檔
+.build-request
+.run-request
+docs/run-build.log
+docs/run-output.txt
+docs/naming-coverage.txt
+dist/
+docs/icon-preview.png
+docs/dmg-check.txt
+docs/tools.txt
+docs/src.txt
+docs/state.txt
+
+# Harness：每次驗證的紀錄（runs/<id>/、ledger.jsonl）只留在本機
+runs/
+__pycache__/
+
+# Local controls and private diagnostics (existing tracked history stays local).
+.commit-message
+.commit-paths
+docs/*.txt
+!docs/FIRST-RUN.txt
+docs/*.png
+docs/*.log
+
+# SwiftPM / Xcode user state and generated archives (keep source catalogs and lockfiles).
+.build/
+Packages/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.xcresult/
+*.xcarchive/
+*.dSYM/
+*.dSYM.zip
+*.ipa
+*.app/
+*.dmg
+*.pkg
+*.playground/contents.xcplayground
+
+# macOS per-volume metadata and editor leftovers.
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+._*
+*~
+
+# Local credentials and signing material. Templates may be shared without values.
+.env
+.env.*
+!.env.example
+!.env.sample
+*.p12
+*.pfx
+*.pem
+*.key
+*.cer
+*.mobileprovision
+*.provisionprofile
+/secrets/
+
+# Runtime databases, original audio and generated caches are not source code.
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.wav
+*.aif
+*.aiff
+*.caf
+*.mp3
+*.m4a
+*.flac
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Website local dependencies and previews; the static website/ source stays tracked.
+node_modules/
+.vercel/
+.netlify/

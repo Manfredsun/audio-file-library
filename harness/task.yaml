@@ -1,0 +1,21 @@
+id: PUBLIC-VERIFY
+title: Verify the published source snapshot
+risk: normal
+base: HEAD
+scope:
+  - app/Sources/*
+  - app/Tests/*
+required_tests:
+  - AppEnvironmentTests
+  - OrganizeExecutorTests
+  - OrganizeJournalTests
+  - OrganizerMapperTests
+  - LibraryManagerTests
+  - LibraryScannerTests
+  - PathRereadTests
+  - TextureBackfillTests
+  - MigrationTests
+  - DatabaseBackupTests
+approved: []
+manual_checks: []
+allow_test_removal: false

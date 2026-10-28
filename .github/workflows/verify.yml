@@ -1,0 +1,31 @@
+name: Verify macOS source
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Install XcodeGen
+        run: python3 scripts/install-xcodegen.py
+      # Private development history contains diagnostic files. Audit the same
+      # allowlisted, history-free snapshot that would be shipped publicly.
+      # Do not weaken scripts/check-public.py or the existing manual release gate.
+      - name: Export public source snapshot
+        run: python3 scripts/export-public.py "$RUNNER_TEMP/audio-file-library-public-source"
+      - name: Check public source
+        run: python3 scripts/check-public.py "$RUNNER_TEMP/audio-file-library-public-source"
+      - name: Resolve the pinned dependency
+        run: bash scripts/bootstrap-dependencies.sh
+      - name: Verify
+        run: bash scripts/verify.sh
+      - name: Enforce the existing test baseline
+        run: python3 -c 'import json,pathlib; root=pathlib.Path("runs"); r=json.loads((root/(root/"LATEST").read_text().strip()/"validation.json").read_text()); assert r["tests"] >= 486, r'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-evidence
+          path: runs/

@@ -1,0 +1,31 @@
+# 任務卡（Task Card）。開新任務時把這份複製成 harness/task.yaml 再填。
+# 語法限制見 harness/policy.yaml 開頭。說明見 harness/LOOP.md §1。
+
+# 任務編號：沿用 ROADMAP 的里程碑（M42）或修正（FIX-xxx）、harness 本身（H-xxx）
+id: M00
+title: 一句話的目標
+
+# normal | high。high 需要 review（VERIFY.md V5）。判斷標準見 LOOP.md §1.2。
+risk: normal
+
+# 驗證 diff 的基準。任務開始時的 commit（git rev-parse --short HEAD）。
+base: HEAD
+
+# 這個任務允許改的路徑（glob）。文件類路徑不用列（policy.yaml always_allowed）。
+scope:
+  - app/Sources/Features/Browser/*
+  - app/Tests/SomethingTests.swift
+
+# 驗收用的測試：必須真的跑過且通過。寫 suite 名稱，或 Suite.testMethod。
+required_tests:
+  - SomethingTests
+
+# 使用者在對話中核准的項目：policy.yaml approval 裡的 glob，或 pattern:<名稱>。
+# 每一項後面用註解行寫核准來源（日期 + 使用者原話摘要）。
+approved: []
+
+# 程式碼驗證不了、需要使用者手動確認的事。使用者確認後改成「[x] 原文」。
+manual_checks: []
+
+# 只有任務本身就是「移除某個功能」時才設 true，並在 DECISIONS 記錄。
+allow_test_removal: false

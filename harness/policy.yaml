@@ -1,0 +1,111 @@
+# Harness Policy — 機器可讀。說明見 harness/POLICY.md。
+#
+# 語法只支援兩種（Mac 內建 python3 沒有 PyYAML，harness.py 自己解析）：
+#   key: value
+#   key:
+#     - item
+# 整行註解用 #。list 裡的 item 不支援行尾註解。
+# glob 用 fnmatch：* 可以跨越 /，所以 app/Tests/* 涵蓋所有子目錄。
+#
+# 改這個檔案本身需要使用者核准（見 approval）。
+
+# 任何任務都不得改動。命中即 FAIL，沒有核准管道。
+deny:
+  - .env
+  - .env.*
+  - secrets/*
+  - *.sqlite
+  - *.sqlite-wal
+  - *.sqlite-shm
+  - *.wav
+  - *.aif
+  - *.aiff
+  - *.mp3
+  - *.flac
+  - FoleyLibrary.xcodeproj/*
+  - app/Info.plist
+
+# 改了必須在 harness/task.yaml 的 approved 列出同一個 glob，否則 FAIL。
+# 這些檔案改錯的代價是：資料庫毀損、驗證規則被放寬、或發出去的版本出錯。
+approval:
+  - app/Sources/Database/Migrations.swift
+  - app/Sources/Database/AppDatabase.swift
+  - app/Sources/Database/DatabaseBackup.swift
+  - app/Sources/Database/OrganizeJournal.swift
+  - app/Sources/Organizer/OrganizeExecutor.swift
+  - app/Sources/Organizer/PathRereadService.swift
+  - app/Sources/Organizer/OrganizerResultMapper.swift
+  - app/Sources/FileSystem/FileActions.swift
+  - project.yml
+  - scripts/release.sh
+  - scripts/watch.sh
+  - scripts/commit.sh
+  - scripts/verify.sh
+  - harness/harness.py
+  - harness/policy.yaml
+  - harness/limits.yaml
+  - AGENTS.md
+  - CLAUDE.md
+
+# 不受任務 scope 限制的路徑（文件、交接、檢查報告）。
+always_allowed:
+  - docs/*.md
+  - MEMORY.md
+  - ROADMAP.md
+  - README.md
+  - harness/task.yaml
+  - harness/reviews/*
+  - harness/KNOWN-FAILURES.md
+
+# 不算改動：腳本輸出、系統雜檔。
+ignore:
+  - .DS_Store
+  - */.DS_Store
+  - docs/*.txt
+  - docs/*.log
+  - docs/*.png
+  - runs/*
+  - .build-request
+  - .run-request
+  - .commit-message
+  - .commit-paths
+
+# 指紋不包含這些（改文件不會讓驗證失效）。
+fingerprint_exclude:
+  - *.md
+  - docs/*
+  - harness/task.yaml
+  - harness/reviews/*
+
+# 受保護的測試：刪檔或 test 函式變少即 FAIL，除非 task.yaml 設 allow_test_removal: true。
+protected_tests:
+  - app/Tests/*
+
+# 產生物與來源：左邊改了，右邊（或產生器）必須也改。格式「產生物 <= 來源 | 來源」。
+generated:
+  - organizer/schemas/*.json <= organizer/references/*.md | scripts/generate-schemas.py
+
+# Swift 新增行命中 → 需要核准 pattern:<名稱>。對應 AGENTS.md §9、§13、CLAUDE.md §57。
+swift_approval_patterns:
+  - file-remove = \bremoveItem\s*\(
+  - file-move = \bmoveItem\s*\(
+  - file-trash = \btrashItem\s*\(
+  - file-replace = \breplaceItem(At)?\s*\(
+  - file-attributes = \bsetAttributes\s*\(
+  - network = \bURLSession\b|\bURLRequest\b|\bNWConnection\b
+  - finder-tags = tagNamesKey|kMDItemUserTags|com\.apple\.metadata:_kMDItemUserTags
+  - raw-sql-write = \b(DELETE\s+FROM|DROP\s+TABLE|UPDATE\s+\w+\s+SET)\b
+
+# 腳本（scripts/ 底下新增或修改的 .sh / .py）新增行命中 → 直接 FAIL。
+script_deny_patterns:
+  - sudo = (^|\s)sudo\s
+  - rm-root = rm\s+-[a-zA-Z]*r[a-zA-Z]*f?\s+(/|~|\$HOME)(\s|$)
+  - shutdown = \b(shutdown|reboot)\b
+
+# 腳本新增行命中 → 需要核准 pattern:<名稱>。
+script_approval_patterns:
+  - db-write = sqlite3(?![^\n]*mode=ro)[^\n]*\b(INSERT|UPDATE|DELETE|DROP|ALTER|VACUUM|REPLACE)\b
+  - external-volume = /Volumes/
+  - recursive-delete = \brm\s+-[a-zA-Z]*r
+  - network = \b(curl|wget)\b
+  - audio-batch = \b(afinfo|afconvert|ffmpeg|ffprobe)\b

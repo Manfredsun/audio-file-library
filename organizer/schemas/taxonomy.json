@@ -1,0 +1,165 @@
+{
+  "version": 3,
+  "source": "organizer/references/taxonomy.md",
+  "source_sha256": "da8690b00a364792551dbdab9b9fc2a9e08f149bf5f64643972fa580ce18eafc",
+  "top_level": [
+    "Foley",
+    "Ambience",
+    "Impacts",
+    "Vehicles",
+    "Machines",
+    "Human",
+    "Animals",
+    "Nature",
+    "UI",
+    "Musical",
+    "Drums",
+    "Instruments",
+    "Designed",
+    "Other",
+    "Unclassified"
+  ],
+  "categories": {
+    "Foley": [
+      "Footsteps",
+      "Doors",
+      "Cloth",
+      "Body",
+      "Props",
+      "Handling",
+      "Movement",
+      "Furniture",
+      "Containers",
+      "Surface Interaction"
+    ],
+    "Ambience": [
+      "Interior",
+      "Exterior",
+      "Urban",
+      "Rural",
+      "Room Tone",
+      "Crowd",
+      "Traffic",
+      "Industrial",
+      "Weather",
+      "Nature Ambience"
+    ],
+    "Impacts": [
+      "Metal",
+      "Wood",
+      "Glass",
+      "Plastic",
+      "Stone",
+      "Body",
+      "Generic"
+    ],
+    "Vehicles": [
+      "Car",
+      "Motorcycle",
+      "Truck",
+      "Bus",
+      "Train",
+      "Aircraft",
+      "Boat",
+      "Bicycle"
+    ],
+    "Machines": [
+      "Mechanical",
+      "Motor",
+      "Fan",
+      "Tool",
+      "Appliance",
+      "Industrial Machine",
+      "Electronics"
+    ],
+    "Human": [
+      "Breath",
+      "Cough",
+      "Sneeze",
+      "Cheer",
+      "Laugh",
+      "Cry",
+      "Shout",
+      "Murmur",
+      "Crowd Voice"
+    ],
+    "Animals": [
+      "Dog",
+      "Cat",
+      "Bird",
+      "Horse",
+      "Insect",
+      "Farm Animal",
+      "Wild Animal",
+      "Unknown Animal"
+    ],
+    "Nature": [
+      "Wind",
+      "Rain",
+      "Thunder",
+      "Water",
+      "Fire",
+      "Leaves",
+      "Forest",
+      "Ocean",
+      "River"
+    ],
+    "UI": [
+      "Click",
+      "Notification",
+      "Alert",
+      "Confirm",
+      "Error",
+      "Transition",
+      "Digital Tone"
+    ],
+    "Musical": [
+      "Instrument",
+      "Tone",
+      "Drone",
+      "Hit",
+      "Chord",
+      "Rhythmic"
+    ],
+    "Drums": [
+      "Kick",
+      "Snare",
+      "Clap",
+      "Hi-Hat",
+      "Cymbal",
+      "Tom",
+      "Percussion",
+      "808",
+      "Drum Loop",
+      "Break",
+      "Fill"
+    ],
+    "Instruments": [
+      "Bass",
+      "Keys",
+      "Guitar",
+      "Synth",
+      "Brass",
+      "Strings",
+      "Vocal",
+      "Chord",
+      "Lead",
+      "Pad",
+      "Melodic Loop"
+    ],
+    "Designed": [
+      "Whoosh",
+      "Riser",
+      "Downer",
+      "Impact Hit",
+      "Transition",
+      "Stinger",
+      "Texture",
+      "Drone",
+      "Sweep",
+      "Glitch"
+    ],
+    "Other": [],
+    "Unclassified": []
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sound Library Organizer Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "display_name",
+    "category",
+    "subcategory",
+    "tags",
+    "description",
+    "confidence",
+    "needs_review",
+    "alternative_categories"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "recognized",
+        "suggested",
+        "uncertain",
+        "unknown",
+        "failed"
+      ]
+    },
+    "display_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "subcategory": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "style": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "Musical style from style-vocabulary.md. Optional: omit or null when the path carries no style evidence — never guessed."
+    },
+    "bpm": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 20,
+      "maximum": 400,
+      "description": "Tempo. Optional and measured/literal, not interpreted — omit unless the path states it or the signal supports it."
+    },
+    "musical_key": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 8,
+      "description": "Key, read literally from the filename. Optional. Never inferred from audio."
+    },
+    "is_loop": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Loop or one-shot. Optional; null means the evidence does not say."
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      }
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "alternative_categories": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+      }
+    }
+  }
+}

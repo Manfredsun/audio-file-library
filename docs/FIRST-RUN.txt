@@ -1,0 +1,26 @@
+Audio File Library 1.0.2-rc.1 — 安裝與第一次使用 / Installation
+
+公開預覽候選包。人工素材抽樣及完整實機驗收未完成；未經 Apple 公證。
+Public preview candidate; manual audio sampling and full real-device QA pending; not Apple-notarized.
+
+1. 退出舊版，將 Audio File Library.app 拖到 Applications，再開啟。
+   Quit the previous version, drag the app into Applications, then open it.
+2. ad-hoc 簽章，未經 Apple 公證。若 macOS 阻擋首次開啟，請依系統提示在
+   「系統設定 → 隱私權與安全性」檢視此 App 的開啟選項。
+   Ad-hoc signed and not notarized. Follow macOS guidance in Privacy & Security.
+3. 按＋加入素材資料夾，等待索引，再搜尋、預覽與拖入 Logic Pro。
+   Add a folder with ＋, wait for indexing, then search, preview and drag.
+4. 齒輪或⌘,開啟設定：外觀立即生效，語言下次開啟生效。
+   Settings: gear or ⌘,. Appearance applies immediately; language on next launch.
+5. 分析與備份位於「分析」選單。分類是建議，請自行確認。
+   Analysis and Backups are in the Analyze menu. Review classification suggestions.
+
+此包使用正式版資料位置 com.manfredsun.foleylibrary；Beta資料不會自動合併。
+Uses the production data location. Previous Beta metadata is not merged automatically.
+已有正式版資料者請先備份。原始音檔不會被自動改名、搬移或刪除。
+Back up existing app metadata first. Original audio is not automatically renamed, moved or deleted.
+整理經確認後建立硬連結，硬連結不是備份。請先用少量複製素材測試。
+Organization creates confirmed hard links, not backups. Test with copied material first.
+
+完整功能、資料說明與已知限制見 README.md。
+See README.md for features, data handling and known limitations.

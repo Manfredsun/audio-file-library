@@ -1,0 +1,59 @@
+Audio File Library — Third-party notices
+
+GRDB.swift 7.11.1
+https://github.com/groue/GRDB.swift
+Revision: b83108d10f42680d78f23fe4d4d80fc88dab3212
+
+Copyright (C) 2015-2025 Gwendal Roué
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+Distribution and asset inventory — reviewed 2026-10-28
+
+The root MIT LICENSE covers project material for which the contributors hold
+sufficient rights. It does not relicense third-party code, Apple SDK material,
+commercial audio, or assets whose rights have not been established.
+
+Runtime package:
+- GRDB.swift 7.11.1 is pinned in dependencies/Package.resolved and project.yml.
+  Its complete MIT notice above matches the checked-out pinned dependency.
+  Retain that notice in source and app distributions.
+- The current configuration uses the system SQLite library, not SQLCipher.
+
+Build tools, not bundled runtime dependencies:
+- Xcode / macOS SDK remain governed by Apple's terms and are not redistributed.
+- XcodeGen and Python are development prerequisites, not vendored project code.
+- scripts/icon/make-icon.py uses Pillow to generate the app icon; Pillow is not
+  bundled in the application. Installing these tools does not relicense them.
+
+Artwork and website:
+- app/Resources/AppIcon.icns has an in-repository generator at
+  scripts/icon/make-icon.py and the design is documented in docs/DECISIONS.md.
+- website/assets/app-icon.png is a project-generated derivative of AppIcon.icns.
+  Its provenance was verified on 2026-10-28: the website creation command copied
+  docs/icon-preview.png (byte-identical); exporting the App ICNS at 1024px and
+  resizing to 256px reproduces every RGBA pixel of the website PNG. All eight
+  PNG representations in the ICNS match the in-repository Pillow generator.
+  The original source/icon commit is 680ef1b92a756293fd4b055441b513a8d4a00aff.
+  No third-party image, glyph or icon pack input was found in that generator.
+  This corrects the earlier pending result, which compared only the directly
+  embedded 256px representation and missed the 1024px resize path.
+  Treat this project artwork under the root MIT license; preserve its source
+  and provenance record in docs/ICON-PROVENANCE.md. This is not a guarantee of
+  exclusive copyright or trademark clearance.
+- The website references system fonts; no font binaries, CDN framework or
+  third-party JavaScript library were found in its current files.
+
+Audio and private records:
+- No raw audio, database or credential-container file extensions were found in
+  reachable tracked history. Diagnostic text does contain private material
+  names and local paths; this is a privacy concern, not permission to distribute
+  the referenced sounds. Original library/audio rights remain with their owners.
+
+This is a repository inventory based on available files, not a guarantee of all
+asset ownership or an exhaustive legal clearance.

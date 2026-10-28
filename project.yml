@@ -1,0 +1,126 @@
+name: FoleyLibrary
+
+options:
+  developmentLanguage: en
+  bundleIdPrefix: com.manfredsun
+  deploymentTarget:
+    macOS: "14.0"
+  postGenCommand: bash scripts/bootstrap-dependencies.sh --restore-lock
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    MARKETING_VERSION: "1.0.2"
+    CURRENT_PROJECT_VERSION: "4"
+    DEAD_CODE_STRIPPING: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+
+packages:
+  GRDB:
+    url: https://github.com/groue/GRDB.swift
+    exactVersion: 7.11.1
+
+targets:
+  FoleyLibrary:
+    type: application
+    platform: macOS
+    sources:
+      - path: app/Sources
+      # Organizer 白名單以資源形式打包，執行期由 Taxonomy / TagVocabulary 讀取
+      - path: LICENSE
+        buildPhase: resources
+      - path: THIRD-PARTY-NOTICES.txt
+        buildPhase: resources
+      - path: app/Resources/Localizable.xcstrings
+        buildPhase: resources
+      - path: app/Resources/InfoPlist.xcstrings
+        buildPhase: resources
+      - path: app/Resources/AppIcon.icns
+      - path: organizer/schemas/taxonomy.json
+        buildPhase: resources
+      - path: organizer/schemas/tag-vocabulary.json
+        buildPhase: resources
+      - path: organizer/schemas/style-vocabulary.json
+        buildPhase: resources
+      - path: organizer/schemas/texture-vocabulary.json
+        buildPhase: resources
+      # Organizer 的行為規格隨 app 一起送出，不抄進原始碼（AGENTS.md §50）
+      - path: organizer/schemas/organization-result.json
+        buildPhase: resources
+    dependencies:
+      - package: GRDB
+        product: GRDB
+    info:
+      path: app/Info.plist
+      properties:
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, zh-Hant]
+        CFBundleName: FoleyLibrary
+        CFBundleDisplayName: Audio File Library
+        CFBundleIconFile: AppIcon
+        # 版本號從 build settings 帶進來。沒寫的話 XcodeGen 產生的 Info.plist 會寫死 1.0，
+        # 改 MARKETING_VERSION 不會生效（2026-09-23 打包 1.0.1 時發現）。
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        NSHumanReadableCopyright: "本機音效庫管理工具。不連網，不上傳任何檔案。"
+        LSApplicationCategoryType: public.app-category.music
+        NSHighResolutionCapable: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.manfredsun.foleylibrary
+        # 不啟用 App Sandbox：使用者的音色庫在外接碟上，
+        # 而整理功能要在那顆碟上建硬連結。沙盒化需要另一套授權流程（D-002）。
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: NO
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+
+  FoleyLibraryTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: app/Tests
+      # 測試需要 md 原文才能驗證 json 是否與規格同步
+      - path: organizer/schemas/taxonomy.json
+        buildPhase: resources
+      - path: organizer/schemas/tag-vocabulary.json
+        buildPhase: resources
+      - path: organizer/references/taxonomy.md
+        buildPhase: resources
+      - path: organizer/references/tagging-rules.md
+        buildPhase: resources
+      - path: organizer/schemas/style-vocabulary.json
+        buildPhase: resources
+      - path: organizer/schemas/texture-vocabulary.json
+        buildPhase: resources
+      - path: organizer/references/style-vocabulary.md
+        buildPhase: resources
+      - path: organizer/schemas/organization-result.json
+        buildPhase: resources
+    dependencies:
+      - target: FoleyLibrary
+      - package: GRDB
+        product: GRDB
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.manfredsun.foleylibrary.tests
+        # 測試 bundle 需要 Info.plist 才能簽章；交給 Xcode 自動產生
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  FoleyLibrary:
+    build:
+      targets:
+        FoleyLibrary: all
+        FoleyLibraryTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      environmentVariables:
+        FOLEY_TEST_HOST: "1"
+      targets:
+        - FoleyLibraryTests

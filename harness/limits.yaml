@@ -1,0 +1,17 @@
+# Harness Limits — 機器可讀。說明見 harness/LOOP.md §5。改這個檔案需要使用者核准。
+
+# 同一個任務最多送幾次驗證（不含 PASS 之後的收尾）。超過 → BLOCKED。
+max_attempts_per_task: 5
+
+# 同一個失敗特徵連續出現幾次 → BLOCKED（不要用同一招撞第三次）。
+max_same_failure: 2
+
+# 每一步的大小（CLAUDE.md §52：每一輪都要使用者的機器跑一次建置，步子要小）。超過只警告。
+max_files_per_step: 8
+max_added_lines_per_step: 400
+
+# 各步驟的逾時秒數。2026-09-23 曾經卡在抓 GRDB 十分鐘以上。
+timeout_generate_seconds: 60
+timeout_xcodegen_seconds: 120
+timeout_build_seconds: 900
+timeout_test_seconds: 900
